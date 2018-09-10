@@ -1,5 +1,4 @@
 const render = (...props) => {
-  console.log(props)
   props.forEach(e => {  
      append(e);
   });
