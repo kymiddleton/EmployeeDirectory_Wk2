@@ -17,21 +17,44 @@
   </section>
 
   <div class="sidenav">
-    <a href="Print">Print</a>
-    <a href="Verify">Verify</a>
-    <a href="Lookup">Lookup</a>
-    <a href="Contains">Contains</a>
-    <a href="Update">Update</a>
-    <a href="Add">Add</a>
-    <a href="Delete">Delete</a>
+    <a href="#" onclick="printList()">Print</a>
+    <a href="#" onclick="verifyCommand()">Verify</a>
+    <a href="#" onclick="lookupCommand()">Lookup</a>
+    <a href="#" onclick="contains()">Contains</a>
+    <a href="#" onclick="updateCommand()">Update</a>
+    <a href="#" onclick="addEmployee()">Add</a>
+    <a href="#" onclick="deleteEmployee()">Delete</a>
+    <a href="#" onclick="phoneLookup()">Phone Lookup</a>
   </div>
 
-  <input type="Print" id=print/>
+  <div class="container">
+    <h2 class="title">Verify</h2>
+    <input type="Verify" id="verifyInput">
+  </div>
 
-  <div id="content"></div>
-  <script src="render.js"></script>
-  <script src="app.js"></script>
-  <script src="dom.js"></script>
+  <form>
+    <input id="print" />
+    <button id="submit">Search</button>
+  </form>
+  <!-- <form>
+    <input id="print"/>
+    <input id="verify" value="button"/>
+    <input id="contains"/>
+    <input id="update"/>
+    <input id="add"/>
+    <input id="delete"/>
+    <input id="phoneLookup"/>
+  </form> -->
+
+  <div id="content">
+    <form><br><input id="input"><input id="button" type="submit" value="button" onclick="verify()"></form>
+
+    <div id="outputArea"></div>
+    <div id="list"></div>
+    <script src="render.js"></script>
+    <script src="dom.js"></script>
+    <script src="app.js"></script>
+  </div>
 </body>
 
 </html>

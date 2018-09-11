@@ -41,12 +41,27 @@ const employeeList = [
   }
 ];
 
+// let command = '';
+
+const employees = $('#outputArea');
+
+const showInput = function () {
+  $('input').addClass('show');
+}
+
+const hideInput = function () {
+  $('input').removeClass('show');
+}
+
 const printEmployee = function (i) {
-  render("Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum);
+  employees.append(`<div>${"Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum}</div>`);
+  // render("Name: " + employeeList[i].name + " / Office: " + employeeList[i].officeNum + " / Phone: " + employeeList[i].phoneNum);
   return true;
 }
 
 const printList = function () {
+  employees.empty();
+  $('#print').on('click', hideInput());
   for (i = 0; i < employeeList.length; i++) {
     printEmployee(i);
   }
@@ -55,7 +70,7 @@ const printList = function () {
 
 const findEmployee = function (startIndex, employeeName) {
   for (i = startIndex; i < employeeList.length; i++) {
-    if (employeeList[i].name.includes(employeeName)) {
+    if (employeeList[i].name.toLowerCase().includes(employeeName.toLowerCase())) {
       return i;
     }
   }
@@ -63,25 +78,32 @@ const findEmployee = function (startIndex, employeeName) {
 }
 
 const verify = function () {
-  const employeeName = prompt('enter employee name');
+  employees.empty();
+
+  const employeeName = document.getElementById("input").value;
   const index = findEmployee(0, employeeName);
   if (index > -1) {
-    render("true");
-  } else { render("false"); }
+    employees.append("Employee Found");
+  } else { employees.append("Employee NOT Found"); }
   return true;
 }
 
 const lookup = function () {
+  employees.empty();
+
   let index = 0;
-  const employeeName = prompt('enter employee name');
+  const employeeName = document.getElementById("input").value;
+  // const employeeName = prompt('enter employee name');
   index = findEmployee(0, employeeName);
   if (index > -1) {
     printEmployee(index);
-  } else { render("Not Found"); }
+  } else { employees.append("Employee NOT Found"); }
   return true;
 }
 
 const contains = function () {
+  employees.empty();
+
   let index = 0;
   const toFind = prompt('enter partial employee name');
   while (index > -1) {
@@ -93,6 +115,8 @@ const contains = function () {
 }
 
 const update = function () {
+  employees.empty();
+
   const employeeName = prompt('enter employee name');
   const field = prompt('enter field to update (name, office, phone)');
   const newValue = prompt('enter new value for ' + field);
@@ -104,13 +128,15 @@ const update = function () {
   } else if (field === "phone") {
     employeeList[index].phoneNum = newValue;
   } else {
-    render("invalid command");
+    employees.append("Invalid Command");
   }
   printEmployee(index);
   return true;
 }
 
 const addEmployee = function () {
+  employees.empty();
+
   const name = prompt('enter employee name');
   const officeNum = prompt('enter office number');
   const phoneNum = prompt('enter telephone number');
@@ -120,6 +146,8 @@ const addEmployee = function () {
 }
 
 const deleteEmployee = function () {
+  employees.empty();
+
   const employeeName = prompt('enter employee name');
   index = findEmployee(0, employeeName);
   employeeList.splice(index, 1);
@@ -128,28 +156,84 @@ const deleteEmployee = function () {
 }
 
 const phoneLookup = function () {
+  employees.empty();
+
   const employeeName = prompt('which employee');
   const index = findEmployee(0, employeeName);
-  render(employeeList[index].phoneNum);
+  employees.append("Phone #: " + employeeList[index].phoneNum);
   return true;
 }
 
-const command = prompt("enter command");
-if (command === "print") {
-  printList();
-} else if (command === "verify") {
-  verify();
-} else if (command === "lookup") {
-  lookup();
-} else if (command === "contains") {
-  contains();
-} else if (command === "update") {
-  update();
-} else if (command === "add") {
-  addEmployee();
-} else if (command === "delete") {
-  deleteEmployee();
-} else if (command === "phone") {
-  phoneLookup();
-} else (render("invalid command"));
+// const runCommand = function (e) {
+//   e.preventDefault();
+//     switch (command) {
+//     case 'print':
+//     let htmlStr = '';
+//     for (let i = 0; i < employeeList.length; i++){
+//       htmlStr += `<p> ${employeeList[i].name}</p>`;
+//       htmlStr += `<p> ${employeeList[i].officeNum}</p>`;
+//     }
+//     render(htmlStr);
+//     break;
+//     case 'verify':
+//     render('verify');
+//     let userName = $('input').val();
+//     render(employeeList.some(e => e.name.toLowerCase() === userName.toLowerCase()) ? 'yes' : 'no';
+//     break;
+//   }
+// }
+
+// const verify = function () {
+//   command = 'verify'
+//   $('input').addClass('show');
+// }
+
+// const print = function () {
+//   command = 'print';
+//   $('input').removeClass('show');
+// }
+
+const verifyCommand = function () {
+  $('#verify').on('click', showInput());
+  $('#button').html('onclick', verify());
+  return true;
+}
+
+const updateCommand = function () {
+  $('#update').on('click', showInput());
+  $('#button').html('onclick', update());
+  return true;
+}
+
+const lookupCommand = function () {
+  $('#lookup').on('click', showInput());
+  $('#button').html('onclick', lookup()); /*look up format*/
+  return true;
+}
+
+// const render = function(html) {
+//   $('#list').html(htmlStr);
+// }
+
+// $('#submit').on('click', runCommand);
+// $('#print').on('click', print);
+
+// const command = prompt("enter command");
+// if (command === "print") {
+//   printList();
+// } else if (command === "Verify") {
+//   verify();
+// } else if (command === "Lookup") {
+//   lookup();
+// } else if (command === "Contains") {
+//   contains();
+// } else if (command === "Update") {
+//   update();
+// } else if (command === "Add") {
+//   addEmployee();
+// } else if (command === "Delete") {
+//   deleteEmployee();
+// } else if (command === "Phone") {
+//   phoneLookup();
+// } else (render("Invalid Command"));
 
