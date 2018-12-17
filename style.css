@@ -95,9 +95,15 @@ input {
     display: none;
 }
 
-.show {
-    display: block;
+form {
+    display: none;
 }
+
+.show {
+    display: input;
+}
+
+
 
 #outputArea {
     line-height: 1.75;
